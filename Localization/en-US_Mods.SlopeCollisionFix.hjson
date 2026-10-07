@@ -1,0 +1,33 @@
+Configs: {
+	FixConfig: {
+		DisplayName: Slope Collision Fix
+
+		Activation: {
+			Label: Activation
+			Tooltip:
+				'''
+				When the fix should be active. Changes take effect after reloading mods.
+				Check client.log for "[SlopeCollisionFix]" to see what the mod decided and why.
+				'''
+		}
+	}
+
+	ActivationMode: {
+		Tooltip: ""
+
+		Auto: {
+			Label: Auto (ARM64 only)
+			Tooltip: Active only on ARM64 systems such as Apple Silicon Macs, where the bug has been confirmed.
+		}
+
+		Always: {
+			Label: Always
+			Tooltip: Active on every platform. Try this if sloped stairs act like walls on a non-ARM64 system.
+		}
+
+		Never: {
+			Label: Never
+			Tooltip: Never active.
+		}
+	}
+}

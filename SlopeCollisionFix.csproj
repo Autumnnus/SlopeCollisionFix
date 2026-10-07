@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\tModLoader.targets" />
+  <PropertyGroup>
+    <AssemblyName>SlopeCollisionFix</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Standalone helper, not part of the mod. -->
+    <Compile Remove="tools/**" />
+    <None Remove="tools/**" />
+    <AdditionalFiles Remove="tools/**" />
+  </ItemGroup>
+</Project>

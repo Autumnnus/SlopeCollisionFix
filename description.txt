@@ -1,0 +1,27 @@
+Fixes hammered (sloped) block stairs acting like walls on Apple Silicon Macs and other ARM64 systems.
+
+THE BUG
+On ARM64, when you walk from a flat floor into a sloped block, the player stops dead as if the slope were a wall instead of walking up it. Regular step-up stairs still work. The problem shows up with popular mods such as Calamity Mod or Magic Storage enabled, because they hook the collision code, but the root cause is not in those mods.
+
+WHAT IS GOING ON
+The optimized machine code that .NET's JIT compiler generates for Terraria's Collision.TileCollision on ARM64 gets the sloped-tile check wrong. The same C# code with the same inputs returns the correct result when it is not optimized. Mods that hook TileCollision make it happen right away, because the hooked copy is compiled with full optimizations.
+
+WHAT THIS MOD DOES
+It installs one hook on Collision.TileCollision that runs an exact, unoptimized copy of the vanilla method instead of the miscompiled one. Hooks other mods placed on TileCollision are replayed on top of that copy in the same order, so their behavior is kept. Calamity Mod's arena walls and Magic Storage's Storage Unit collision are supported.
+
+SAFETY
+- Only changes Collision.TileCollision. It does not touch worlds, players, items or network packets, and saves no data. Removing it leaves no trace.
+- Turns itself off, so the game behaves as if the mod were not installed, if:
+  - the system is not ARM64 (configurable),
+  - tModLoader's TileCollision differs from the version this copy was written for,
+  - another mod changes TileCollision in a way that cannot be replayed exactly,
+  - hooks change while the game is running.
+- Does not need to be installed on the server or by other players (NoSync).
+Every decision is written to client.log under [SlopeCollisionFix].
+
+CONFIG
+Activation: Auto (ARM64 only, default), Always, Never. Try "Always" if you see the same bug on another platform, and please report it.
+
+Tested on macOS (Apple Silicon) with Calamity Mod and Magic Storage. Not yet tested on Linux.
+
+Source code and bug reports: https://github.com/Autumnnus/SlopeCollisionFix

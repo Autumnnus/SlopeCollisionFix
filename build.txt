@@ -1,0 +1,10 @@
+displayName = Slope Collision Fix (macOS/Linux ARM64)
+author = Autumnnus
+version = 1.0.0
+homepage = https://github.com/Autumnnus/SlopeCollisionFix
+side = NoSync
+sortAfter = CalamityMod, MagicStorage
+hideCode = false
+hideResources = false
+includeSource = true
+buildIgnore = *.md, .git*, LICENSE, tools/**, icon_workshop.png, description_workshop.txt
